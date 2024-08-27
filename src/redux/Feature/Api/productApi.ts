@@ -1,4 +1,6 @@
 import {
+  ApiResponse,
+  RegisterFormData,
   Tproduct,
   TqueryObj,
   TqueryParam,
@@ -10,13 +12,21 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://champer.vercel.app/api/v1",
+    baseUrl: "http://localhost:3000/api",
   }),
   tagTypes: ["products", "product"],
   endpoints: (builder) => ({
     createProduct: builder.mutation<Tresult, Partial<Tproduct>>({
       query: (data) => ({
         url: "/products",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["products"],
+    }),
+    createUser: builder.mutation<ApiResponse, RegisterFormData>({
+      query: (data) => ({
+        url: "/auth/signup",
         method: "POST",
         body: data,
       }),
@@ -92,4 +102,5 @@ export const {
   useEditProductMutation,
   useGetFilteredProductQuery,
   useCreateCartMutation,
+  useCreateUserMutation,
 } = productApi;

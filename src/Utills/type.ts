@@ -54,3 +54,31 @@ export type TuserDetails = {
   userProductInfo?: newObj[];
   userTotalPay?: number;
 };
+
+export interface RegisterFormData {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  phone: string;
+  role: string;
+}
+
+export interface UserData {
+  name: string;
+  email: string;
+  role: string;
+  phone: string;
+  address: string;
+  _id: string;
+  createdAt: string; // ISO 8601 date string
+  updatedAt: string; // ISO 8601 date string
+}
+
+// Define the type for the overall response
+export interface ApiResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: UserData;
+}
