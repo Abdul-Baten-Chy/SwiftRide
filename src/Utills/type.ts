@@ -63,6 +63,10 @@ export interface RegisterFormData {
   phone: string;
   role: string;
 }
+export interface signInData {
+  email: string;
+  password: string;
+}
 
 export interface UserData {
   name: string;
@@ -82,3 +86,50 @@ export interface ApiResponse {
   message: string;
   data: UserData;
 }
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  phone: string;
+  address: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Define the data object containing user and token
+interface DataResponse {
+  user: User;
+  token: string;
+}
+
+// Define the success response data structure
+interface SuccessResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: DataResponse;
+}
+
+// Define the structure of individual error messages
+interface ErrorMessage {
+  path: string;
+  message: string;
+}
+
+// Define the error data structure
+interface ErrorData {
+  success: boolean;
+  message: string;
+  errorMessages: ErrorMessage[];
+  stack: string;
+}
+
+// Define the error response data structure
+interface ErrorResponse {
+  status: number;
+  data: ErrorData;
+}
+
+// Union type to represent either a success or error response
+export type signResponse = SuccessResponse | ErrorResponse;

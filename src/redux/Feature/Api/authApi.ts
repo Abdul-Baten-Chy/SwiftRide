@@ -1,0 +1,52 @@
+import {
+  ApiResponse,
+  RegisterFormData,
+  signInData,
+  signResponse,
+} from "@/Utills/type";
+import { userLoggedIn } from "../authSlice";
+import { Api } from "./api";
+
+const authApi = Api.injectEndpoints({
+  endpoints: (builder) => ({
+    createUser: builder.mutation<ApiResponse, RegisterFormData>({
+      query: (data) => ({
+        url: "/auth/signup",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    signIn: builder.mutation<signResponse, signInData>({
+      query: (data) => ({
+        url: "/auth/signin",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              accessToken: result?.data?.data?.token,
+              user: result?.data?.data?.user,
+            })
+          );
+
+          dispatch(
+            userLoggedIn({
+              accessToken: result?.data?.data?.token,
+              user: result?.data?.data?.user,
+            })
+          );
+        } catch (err) {
+          // do nothing
+        }
+      },
+    }),
+  }),
+  overrideExisting: false,
+});
+
+export const { useCreateUserMutation, useSignInMutation } = authApi;

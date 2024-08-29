@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion"; // Import motion from Framer Motion
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
@@ -113,9 +114,11 @@ const Hero = () => {
                   <Button className="bg-customBlue mt-4 px-8 font-montserrat uppercase font-semibold">
                     Explore
                   </Button>
-                  <Button className="bg-white text-black hover:text-white ml-4 mt-4 px-8 font-montserrat uppercase font-semibold">
-                    Register
-                  </Button>
+                  <Link to="/register">
+                    <Button className="bg-white text-black hover:text-white ml-4 mt-4 px-8 font-montserrat uppercase font-semibold">
+                      Register
+                    </Button>
+                  </Link>
                 </motion.div>
               </div>
             </div>

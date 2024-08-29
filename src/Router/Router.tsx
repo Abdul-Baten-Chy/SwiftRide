@@ -3,7 +3,8 @@ import AddProducts from "@/components/AddProduct";
 import UpdateProduct from "@/components/UpdateProduct";
 import About from "@/Pages/about/About";
 import { Register } from "@/Pages/auth/Register";
-import { SignIn } from "@/Pages/auth/SignIn";
+import { Signin } from "@/Pages/auth/SignIn";
+
 import Cart from "@/Pages/Cart";
 import CheckOut from "@/Pages/CheckOut";
 import DetailsPage from "@/Pages/DetailsPage";
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/signIn",
-        element: <SignIn></SignIn>,
+        element: <Signin></Signin>,
       },
       {
         path: "/register",

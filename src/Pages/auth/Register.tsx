@@ -8,9 +8,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCreateUserMutation } from "@/redux/Feature/Api/productApi";
+import { useCreateUserMutation } from "@/redux/Feature/Api/authApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { z } from "zod";
 
 const formSchema = z
@@ -122,44 +123,46 @@ export function Register() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-lato font-medium text-lg text-gray-500">
-                  Password
-                </FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="password" {...field} />
-                </FormControl>
-                <FormMessage>
-                  {form.formState.errors.password?.message}
-                </FormMessage>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-lato font-medium text-lg text-gray-500">
-                  Confirm Password
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="confirm password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage>
-                  {form.formState.errors.confirmPassword?.message}
-                </FormMessage>
-              </FormItem>
-            )}
-          />
+          <div className="flex gap-4">
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-lato font-medium text-lg text-gray-500">
+                    Password
+                  </FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="password" {...field} />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.password?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-lato font-medium text-lg text-gray-500">
+                    Confirm Password
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="confirm password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.confirmPassword?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="address"
@@ -202,6 +205,12 @@ export function Register() {
             Submit
           </Button>
         </form>
+        <Link to="/signin">
+          <h3 className="text-center mt-4 font-lato">
+            Already Have Account?{" "}
+            <span className="text-customBlue">Sign In</span>
+          </h3>
+        </Link>
       </Form>
     </>
   );

@@ -1,20 +1,13 @@
 import {
-  ApiResponse,
-  RegisterFormData,
   Tproduct,
   TqueryObj,
   TqueryParam,
   Tresult,
   TresultSingle,
 } from "@/Utills/type";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Api } from "./api";
 
-export const productApi = createApi({
-  reducerPath: "productApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/api",
-  }),
-  tagTypes: ["products", "product"],
+export const productApi = Api.injectEndpoints({
   endpoints: (builder) => ({
     createProduct: builder.mutation<Tresult, Partial<Tproduct>>({
       query: (data) => ({
@@ -24,14 +17,7 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["products"],
     }),
-    createUser: builder.mutation<ApiResponse, RegisterFormData>({
-      query: (data) => ({
-        url: "/auth/signup",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["products"],
-    }),
+
     editProduct: builder.mutation<Tresult, Partial<TresultSingle>>({
       query: ({ id, data }) => ({
         url: `/products/${id}`,
@@ -102,5 +88,4 @@ export const {
   useEditProductMutation,
   useGetFilteredProductQuery,
   useCreateCartMutation,
-  useCreateUserMutation,
 } = productApi;
