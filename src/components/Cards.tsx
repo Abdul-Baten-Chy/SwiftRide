@@ -4,6 +4,8 @@ import { Key } from "react";
 import { Link } from "react-router-dom";
 
 const Cards = ({ product }) => {
+  console.log(product);
+
   return (
     <div className="my-4">
       <div className="max-w-[350px] h-[500px]  bg-[#EDF7FB] drop-shadow-sm border-2 flex flex-col justify-between">
@@ -22,17 +24,17 @@ const Cards = ({ product }) => {
           <div className="flex  items-center justify-between gap-4">
             <div className="flex text-white gap-1 items-center px-2 bg-[#4a869e]">
               <h3 className=" inline-block bg-[#4a869e] px-2 py-1">
-                {product.brand}
+                {product.name}
               </h3>
             </div>
-            <div className="pr-4">Category: {product.category}</div>
+            <div className="pr-4">Color: {product.color}</div>
           </div>
-          <p className="text-black font-bold mt-4">{product.name}</p>
+          <p className="text-black font-bold mt-4">{product.status}</p>
           <div className="flex items-center justify-between gap-5 mt-5">
             <p className="text-black"> Price: ${product.price} </p>
             <h2 className="text-[#4F46E5]  text-[18px] flex gap-2 pr-4">
               Sizes:{" "}
-              {product?.sizes?.map((item: any, index: Key) => (
+              {product?.features?.map((item: any, index: Key) => (
                 <p key={index}>{item}</p>
               ))}
             </h2>

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../src/assets/logo.png";
 
 const Navbar = () => {
@@ -69,9 +69,11 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end hidden lg:flex">
-          <button className="bg-customBlue font-montserrat font-bold text-white px-8 py-2 rounded-full">
-            Sign In
-          </button>
+          <Link to="/signIn">
+            <button className="bg-customBlue font-montserrat font-bold text-white px-8 py-2 rounded-full">
+              Sign In
+            </button>
+          </Link>
         </div>
       </div>
     </nav>

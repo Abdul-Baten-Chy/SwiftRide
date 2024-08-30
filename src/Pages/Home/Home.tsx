@@ -11,8 +11,6 @@ function Home() {
       <Hero />
       <WhyChooseUs />
       <GridCards></GridCards>
-
-      {/* <FeaturedProducts /> */}
       <WhoWeAre></WhoWeAre>
       <Subscribe></Subscribe>
       <FAQ />

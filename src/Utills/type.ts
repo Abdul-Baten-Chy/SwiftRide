@@ -1,17 +1,23 @@
-export type Tproduct = {
-  _id?: string;
+export interface TCar {
+  _id: string;
   name: string;
-  price: number;
-  sizes: string[];
-  rating: number;
-  category: string;
-  quantity: number;
   description: string;
-  brand: string;
-  userQuantity?: number;
-  images: string[];
-  isFeatured: boolean;
-};
+  color: string;
+  isElectric: boolean;
+  status: "available" | "unavailable";
+  features: string[];
+  pricePerHour: number;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ResponseGetAllCar {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: TCar[];
+}
 
 export type Tresult = {
   success: boolean;
@@ -111,24 +117,21 @@ interface SuccessResponse {
   data: DataResponse;
 }
 
-// Define the structure of individual error messages
-interface ErrorMessage {
-  path: string;
-  message: string;
-}
-
-// Define the error data structure
-interface ErrorData {
-  success: boolean;
-  message: string;
-  errorMessages: ErrorMessage[];
-  stack: string;
-}
-
 // Define the error response data structure
 interface ErrorResponse {
-  status: number;
-  data: ErrorData;
+  error: {
+    status: number;
+    data: {
+      success: boolean;
+      message: string;
+      errorMessages: { path: string; message: string }[];
+      stack: string;
+      data?: {
+        token: string;
+        user: object;
+      };
+    };
+  };
 }
 
 // Union type to represent either a success or error response

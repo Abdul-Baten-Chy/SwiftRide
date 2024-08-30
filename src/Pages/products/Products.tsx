@@ -1,34 +1,26 @@
-import Cards from "@/components/Cards";
+import { Card } from "@/components/Card";
 import Filter from "@/components/Filter";
 import SearchBar from "@/components/SearchBar";
-import { useGetAllProductQuery } from "@/redux/Feature/Api/productApi";
-import { Tproduct } from "@/Utills/type";
+import { useGetAllCarsQuery } from "@/redux/Feature/Api/carApi";
+import { TCar } from "@/Utills/type";
 import { useState } from "react";
 import Hero from "./Hero";
 function Products() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [category, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
-  const { data, isLoading, isError } = useGetAllProductQuery(searchTerm);
+  const { data, isLoading, isError } = useGetAllCarsQuery(searchTerm);
   if (isLoading) return <h2>Loading ...</h2>;
   if (isError) return <h2>Something went wrong</h2>;
 
-  let products = data?.data;
-  if (category) {
-    products = products?.filter((product) => product.category == category);
-  }
+  let cars = data?.data;
 
   if (minPrice) {
-    products = products?.filter(
-      (product) => product.price >= parseInt(minPrice)
-    );
+    cars = cars?.filter((car) => car?.pricePerHour >= parseInt(minPrice));
   }
   if (maxPrice) {
-    products = products?.filter(
-      (product) => product.price <= parseInt(maxPrice)
-    );
+    cars = cars?.filter((car) => car?.pricePerHour <= parseInt(maxPrice));
   }
   return (
     <div className="max-w-[1280px] mx-auto">
@@ -37,8 +29,6 @@ function Products() {
       <div className="flex mt-8 justify-between">
         <SearchBar setSearchTerm={setSearchTerm}></SearchBar>
         <Filter
-          category={category}
-          setCategory={setCategory}
           minPrice={minPrice}
           setMinPrice={setMinPrice}
           maxPrice={maxPrice}
@@ -46,10 +36,8 @@ function Products() {
         ></Filter>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-12">
-        {products &&
-          products?.map((item: Tproduct) => (
-            <Cards key={item._id} product={item}></Cards>
-          ))}
+        {cars &&
+          cars?.map((car: TCar) => <Card key={car?._id} item={car}></Card>)}
       </div>
     </div>
   );

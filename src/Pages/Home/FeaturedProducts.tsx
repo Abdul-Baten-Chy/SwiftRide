@@ -1,17 +1,20 @@
 import { motion } from "framer-motion";
 
-import Cards from "@/components/Cards";
-import { useGetAllProductQuery } from "@/redux/Feature/Api/productApi";
-import { Tproduct } from "@/Utills/type";
+import { useGetAllCarsQuery } from "@/redux/Feature/Api/carApi";
+
+import { Card } from "@/components/Card";
+import { TCar } from "@/Utills/type";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 const FeaturedProducts = () => {
-  const { data, isLoading, isError } = useGetAllProductQuery("");
-  const products = data?.data
-    ?.filter((item) => item.isFeatured == true)
+  const { data, isLoading, isError } = useGetAllCarsQuery(undefined);
+
+  const cars = data?.data
+    ?.filter((item) => item.isElectric == true)
     .slice(0, 4);
   if (isLoading) return <h2> Loading...</h2>;
-  if (isError) return <h2> Something went wrong...</h2>;
+  if (isError) return <h2> {data?.message}</h2>;
+  console.log(cars);
   return (
     <section className="bg-[#edf3f5] mt-10 py-12 ">
       <motion.div
@@ -32,8 +35,8 @@ const FeaturedProducts = () => {
           Unique & modern pottery made by our finest artisans.
         </p>
         <div className="grid mx-auto justify-center grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
-          {products?.map((product: Tproduct) => (
-            <Cards key={product._id} product={product}></Cards>
+          {cars?.map((car: TCar) => (
+            <Card key={car._id} product={car}></Card>
           ))}
         </div>
         <Link to="/products">

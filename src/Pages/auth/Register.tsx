@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -11,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useCreateUserMutation } from "@/redux/Feature/Api/authApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const formSchema = z
@@ -37,6 +38,7 @@ const formSchema = z
       .string()
       .min(8, "Address must be at least 8 characters long")
       .max(50, "Address must be at most 50 characters long"),
+    terms: z.boolean(),
     phone: z
       .string()
       .min(11, "Phone number must be at least 11 characters long")
@@ -48,7 +50,8 @@ const formSchema = z
   });
 
 export function Register() {
-  const [createUser, { isLoading, isError }] = useCreateUserMutation();
+  const [createUser, { isLoading, isError, error }] = useCreateUserMutation();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,6 +61,7 @@ export function Register() {
       confirmPassword: "",
       phone: "",
       address: "",
+      terms: false,
     },
   });
 
@@ -73,17 +77,23 @@ export function Register() {
     };
     try {
       const result = await createUser(dataToSend);
-      if (result) {
+      if (result?.data) {
         alert(result?.data?.message);
+        navigate("/signIn");
         console.log(result);
+      }
+      if (result?.error) {
+        alert(result?.error?.data?.message);
       }
     } catch (error) {
       console.log(error);
     }
     form.reset();
   }
+
+
   if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>something went wrong...</p>;
+  if (isError) return <p>gg</p>;
   return (
     <>
       <Form {...form}>
@@ -106,6 +116,7 @@ export function Register() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="email"
@@ -123,6 +134,24 @@ export function Register() {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-lato font-medium text-lg text-gray-500">
+                  Phone
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="phone number" {...field} />
+                </FormControl>
+                <FormMessage>
+                  {form.formState.errors.phone?.message}
+                </FormMessage>
+              </FormItem>
+            )}
+          />
+
           <div className="flex gap-4">
             <FormField
               control={form.control}
@@ -182,18 +211,26 @@ export function Register() {
           />
           <FormField
             control={form.control}
-            name="phone"
+            name="terms"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-lato font-medium text-lg text-gray-500">
-                  Phone
-                </FormLabel>
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <FormControl>
-                  <Input placeholder="phone number" {...field} />
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
                 </FormControl>
-                <FormMessage>
-                  {form.formState.errors.phone?.message}
-                </FormMessage>
+                <div className="space-y-1 leading-none">
+                  <FormLabel className="font-lato text-gray-500">
+                    I agree to terms and conditions.{" "}
+                    <a href="https://shorturl.at/vn3Eq" target="_blank">
+                      <span className="font-lato text-customBlue">
+                        {" "}
+                        Read Here
+                      </span>
+                    </a>
+                  </FormLabel>
+                </div>
               </FormItem>
             )}
           />
@@ -202,7 +239,7 @@ export function Register() {
             type="submit"
             className="font-lato font-medium text-lg block mx-auto w-full"
           >
-            Submit
+            Register
           </Button>
         </form>
         <Link to="/signin">

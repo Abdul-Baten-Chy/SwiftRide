@@ -4,6 +4,7 @@ export const Api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api",
+    credentials: "include",
     prepareHeaders: async (headers, { getState }) => {
       const token = getState()?.auth?.accessToken;
       if (token) {
@@ -13,6 +14,6 @@ export const Api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["products", "product"],
+  tagTypes: ["cars"],
   endpoints: () => ({}),
 });

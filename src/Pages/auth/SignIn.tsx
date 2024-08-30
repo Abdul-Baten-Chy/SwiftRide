@@ -10,10 +10,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { useSignInMutation } from "@/redux/Feature/Api/authApi";
 import { userLoggedIn } from "@/redux/Feature/authSlice";
-import { RootState } from "@/redux/Feature/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 
@@ -30,9 +29,8 @@ const formSchema = z.object({
 });
 
 export function Signin() {
-  const [signIn, { isLoading, isError }] = useSignInMutation();
+  const [signIn, { isLoading, isError, error }] = useSignInMutation();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,28 +38,30 @@ export function Signin() {
       password: "",
     },
   });
-  console.log(user);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     const dataToSend = {
       email: values.email,
       password: values.password,
     };
     try {
       const result = await signIn(dataToSend);
-      if (result.data) {
+      if (
+        result.data &&
+        "token" in result.data.data &&
+        "message" in result.data
+      ) {
         const userInfo = {
           accessToken: result?.data?.data?.token,
           user: result?.data?.data?.user,
         };
         dispatch(userLoggedIn(userInfo));
         alert(result?.data?.message);
-        console.log(userInfo);
       }
-      if (result?.error) {
-        console.log(result);
-        alert(result.error.data.message);
+      if (result.error) {
+        if (result.error.data) {
+          alert(result.error.data.message);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -69,9 +69,19 @@ export function Signin() {
     form.reset();
   }
   if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>something went wrong...</p>;
+
   return (
     <>
+      <h3 className="text-center font-lato text-customBlue text-lg font-bold">
+        Sign In
+      </h3>
+      {isError && (
+        <div className="flex flex-cols items-center mt-3 justify-center">
+          <p className="text-center text-red-500 font-montserrat text-xl">
+            {error?.data?.message}
+          </p>
+        </div>
+      )}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -116,7 +126,7 @@ export function Signin() {
             type="submit"
             className="font-lato font-medium text-lg block mx-auto w-full"
           >
-            Submit
+            Sign In
           </Button>
         </form>
         <Link to="/register">
