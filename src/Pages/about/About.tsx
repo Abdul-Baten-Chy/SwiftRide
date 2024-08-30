@@ -1,71 +1,196 @@
-function About() {
+import profile from "../../assets/attachment-img.jpg";
+import img from "../../assets/carousel-1.jpg";
+import img2 from "../../assets/carousel-2.jpg";
+import img3 from "../../assets/carousel-3.jpg";
+const About = () => {
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
-      <div className="py-12 px-4 mt-10">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-4 text-center">Our Mission</h2>
-          <p className="text-lg text-gray-800 mb-8 text-center">
-            At Champer Shop, our mission is to redefine vehicle comfort by
-            offering exceptional luxury accessories that enhance every journey.
-            We strive to provide our customers with the highest quality
-            products, meticulously designed to combine comfort, style, and
-            functionality. Whether it's premium seat covers, custom-fit floor
-            mats, or innovative storage solutions, we are committed to exceeding
-            expectations and ensuring unparalleled customer satisfaction. Our
-            mission extends beyond products; it encompasses a dedication to
-            reliability, innovation, and continuous improvement in all aspects
-            of our business.
-          </p>
+    <div className="max-w-6xl mx-auto px-4 py-8 font-lato">
+      {/* Header */}
+      <header className="text-center mb-12">
+        <h1 className="text-4xl font-bold font-lato">About Us</h1>
+      </header>
 
-          <h2 className="text-3xl font-bold mb-4 text-center">Our Vision</h2>
-          <p className="text-lg text-gray-800 mb-8 text-center">
-            Our vision at Champer Shop is to lead the industry as the foremost
-            provider of luxury vehicle comfort solutions. We envision a future
-            where every vehicle owner can experience the ultimate in comfort and
-            style through our innovative products. By focusing on innovation,
-            quality craftsmanship, and customer care, we aim to set new
-            standards in the automotive accessory market. We aspire to be
-            recognized not only for our products but also for our commitment to
-            sustainability and ethical business practices. Through strategic
-            growth and a relentless pursuit of excellence, we aim to build
-            enduring relationships with our customers and become synonymous with
-            luxury and reliability in the automotive industry.
-          </p>
-        </div>
-      </div>
+      {/* Company History */}
+      <section className="mb-12">
+        <h2 className="text-3xl font-semibold mb-4 font-lato">
+          Company History
+        </h2>
+        <p className="mb-2 font-lato">
+          <strong>Founding Year:</strong> Founded in 2010, SwiftRide began with
+          a simple mission: to revolutionize the car rental industry by
+          providing unparalleled service and a diverse range of vehicles.
+        </p>
+        <p className="mb-2 font-lato">
+          <strong>Mission:</strong> Our mission is to offer exceptional car
+          rental experiences by prioritizing customer satisfaction, reliability,
+          and innovation in every aspect of our service.
+        </p>
+        <p>
+          <strong>Vision:</strong> We envision becoming the leading car rental
+          provider globally, recognized for our commitment to quality,
+          sustainability, and customer-centric solutions.
+        </p>
+      </section>
 
-      <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">Location</h2>
-        <div className="rounded-lg overflow-hidden">
-          {/* Replace with your map component or embed code */}
-          <iframe
-            className="w-full h-80"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12763.016347329427!2d-73.98025140951894!3d40.75921168344823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDA5JzI1LjAiTiA3M8KwNDgnMzguMCJX!5e0!3m2!1sen!2sus!4v1628601810989!5m2!1sen!2sus"
-            loading="lazy"
-            title="Location Map"
-          ></iframe>
+      {/* Our Team */}
+      <section className="mb-12">
+        <h2 className="text-3xl font-semibold mb-4 font-lato">Our Team</h2>
+        <div className="flex flex-wrap -mx-4">
+          <div className="w-full md:w-1/3 px-4 mb-8">
+            <div className="flex items-center">
+              <img
+                src={profile}
+                alt="profile"
+                className="w-24 h-24 rounded-full mr-4"
+              />
+              <div>
+                <h3 className="text-xl font-semibold font-lato">
+                  Michael Brown - Manager
+                </h3>
+                <p className="font-lato">
+                  Michael Brown oversees our diverse fleet of vehicles, ensuring
+                  they meet the highest standards of safety and performance.
+                  With a decade of experience in fleet management and
+                  maintenance, Michael ensures that every car is in top
+                  condition for our clients' needs.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="w-full md:w-1/3 px-4 mb-8">
+            <div className="flex items-center">
+              <img
+                src={profile}
+                alt="profile"
+                className="w-24 h-24 rounded-full mr-4"
+              />
+              <div>
+                <h3 className="text-xl font-semibold font-lato">
+                  Michael Brown - Manager
+                </h3>
+                <p className="font-lato">
+                  Michael Brown oversees our diverse fleet of vehicles, ensuring
+                  they meet the highest standards of safety and performance.
+                  With a decade of experience in fleet management and
+                  maintenance, Michael ensures that every car is in top
+                  condition for our clients' needs.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="w-full md:w-1/3 px-4 mb-8">
+            <div className="flex items-center">
+              <img
+                src={profile}
+                alt="profile"
+                className="w-24 h-24 rounded-full mr-4"
+              />
+              <div>
+                <h3 className="text-xl font-semibold font-lato">
+                  Michael Brown - Manager
+                </h3>
+                <p className="font-lato">
+                  Michael Brown oversees our diverse fleet of vehicles, ensuring
+                  they meet the highest standards of safety and performance.
+                  With a decade of experience in fleet management and
+                  maintenance, Michael ensures that every car is in top
+                  condition for our clients' needs.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div>
-        <h2 className="text-xl font-semibold mb-2">Connect with Us</h2>
-        <div className="flex space-x-4">
-          {/* Replace with your social links */}
-          <a href="#" className="text-gray-600 hover:text-gray-900">
-            Facebook
-          </a>
-          <a href="#" className="text-gray-600 hover:text-gray-900">
-            Twitter
-          </a>
-          <a href="#" className="text-gray-600 hover:text-gray-900">
-            Instagram
-          </a>
-          <a href="#" className="text-gray-600 hover:text-gray-900">
-            LinkedIn
-          </a>
+      {/* Our Fleet */}
+      <section className="mb-12">
+        <h2 className="text-3xl font-semibold mb-4 font-lato">Our Fleet</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="text-center">
+            <img
+              src={img}
+              alt="Economy Car"
+              className="w-full h-64 object-cover mb-4"
+            />
+            <h3 className="text-xl font-semibold font-lato">Economy Cars</h3>
+            <p className="font-lato">
+              Affordable and fuel-efficient options perfect for everyday use.
+            </p>
+          </div>
+          <div className="text-center">
+            <img
+              src={img3}
+              alt="Luxury Car"
+              className="w-full h-64 object-cover mb-4"
+            />
+            <h3 className="text-xl font-semibold font-lato">Luxury Cars</h3>
+            <p className="font-lato">
+              Experience premium comfort and style with our high-end vehicles.
+            </p>
+          </div>
+          <div className="text-center">
+            <img
+              src={img2}
+              alt="SUV"
+              className="w-full h-64 object-cover mb-4"
+            />
+            <h3 className="text-xl font-semibold font-lato">SUVs</h3>
+            <p className="font-lato">
+              Spacious and versatile, ideal for family trips or adventurous
+              journeys.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Values & Commitment */}
+      <section className="mb-12">
+        <h2 className="text-3xl font-semibold mb-4 font-lato">
+          Values & Commitment
+        </h2>
+        <p className="mb-2 font-lato">
+          <strong className="font-lato">Customer Service:</strong> At [Company
+          Name], we are dedicated to providing outstanding customer service.
+          From the moment you contact us to the return of your vehicle, our team
+          is here to ensure a seamless and enjoyable experience.
+        </p>
+        <p className="mb-2 font-lato">
+          <strong className="font-lato">Sustainability:</strong> We are
+          committed to reducing our environmental impact. Our initiatives
+          include maintaining a fleet of fuel-efficient and hybrid vehicles, and
+          implementing eco-friendly practices in our operations.
+        </p>
+        <p className="font-lato">
+          <strong className="font-lato">Integrity:</strong> We uphold the
+          highest standards of honesty and transparency in all our interactions.
+          Our clients can trust us to deliver on our promises and maintain fair
+          practices.
+        </p>
+      </section>
+
+      {/* Contact Information */}
+      <section>
+        <h2 className="text-3xl font-semibold mb-4 font-lato">
+          Contact Information
+        </h2>
+        <p className="mb-2 font-lato">
+          <strong className="font-lato">Phone:</strong> 0125489647
+        </p>
+        <p className="mb-2 font-lato">
+          <strong className="font-lato">Email:</strong>{" "}
+          <a
+            href="mailto:[Your Email]"
+            className="text-blue-500 hover:underline font-lato"
+          >
+            swiftride@gmail.com
+          </a>
+        </p>
+        <p className="font-lato">
+          <strong className="font-lato">Address:</strong> Dhaka, Karwan Bazar
+        </p>
+      </section>
     </div>
   );
-}
+};
+
 export default About;
