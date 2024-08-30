@@ -125,16 +125,6 @@ The Car Rental Reservation System is a comprehensive web application designed fo
 - Fully responsive design for mobile, tablet, and desktop.
 - Intuitive navigation and consistent branding elements.
 
-### Bonus Features
-
-- **Payment System:**
-  - Secure online payment gateway integration.
-  - Support for multiple payment methods.
-  - Summary of charges before confirming payment.
-  - Confirmation page with payment receipt.
-- **Theme Switcher:**
-  - Dark/light/system theme switch.
-
 ## Getting Started
 
 ### Prerequisites

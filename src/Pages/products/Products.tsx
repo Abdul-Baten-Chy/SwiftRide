@@ -23,11 +23,13 @@ function Products() {
     cars = cars?.filter((car) => car?.pricePerHour <= parseInt(maxPrice));
   }
   return (
-    <div className="max-w-[1280px] mx-auto">
+    <div className="max-w-[1280px] mx-auto px-10">
       <Hero></Hero>
-      <h2 className="text-3xl text-center mr-16 pt-16">Availble Products</h2>
+      <h2 className="text-3xl text-center mr-16 pt-16 font-montserrat text-[#333333]">
+        Your Next Car is Just a Click Away!
+      </h2>
       <div className="flex mt-8 justify-between">
-        <SearchBar setSearchTerm={setSearchTerm}></SearchBar>
+        <SearchBar setSearchTerm={setSearchTerm} className="h-10"></SearchBar>
         <Filter
           minPrice={minPrice}
           setMinPrice={setMinPrice}
@@ -35,7 +37,7 @@ function Products() {
           setMaxPrice={setMaxPrice}
         ></Filter>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6  mt-12">
         {cars &&
           cars?.map((car: TCar) => <Card key={car?._id} item={car}></Card>)}
       </div>
