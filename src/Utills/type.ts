@@ -69,6 +69,15 @@ export interface RegisterFormData {
   phone: string;
   role: string;
 }
+export interface TupdateUser {
+  _id?: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  address?: string;
+  phone?: string;
+  role?: string;
+}
 export interface signInData {
   email: string;
   password: string;
@@ -134,5 +143,17 @@ interface ErrorResponse {
   };
 }
 
+export interface Booking {
+  _id: string;
+  startTime: string;
+  endTime: string;
+  totalCost: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TableGridProps {
+  myBookings: Booking[];
+}
 // Union type to represent either a success or error response
 export type signResponse = SuccessResponse | ErrorResponse;

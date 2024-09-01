@@ -13,6 +13,7 @@ import { useCreateUserMutation } from "@/redux/Feature/Api/authApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z
@@ -78,19 +79,17 @@ export function Register() {
     try {
       const result = await createUser(dataToSend);
       if (result?.data) {
-        alert(result?.data?.message);
+        toast(result?.data?.message);
         navigate("/signIn");
-        console.log(result);
       }
       if (result?.error) {
-        alert(result?.error?.data?.message);
+        toast(result?.error?.data?.message);
       }
     } catch (error) {
       console.log(error);
     }
     form.reset();
   }
-
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>gg</p>;

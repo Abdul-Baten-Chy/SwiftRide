@@ -32,6 +32,11 @@ const Navbar = () => {
                   HOME
                 </li>
               </NavLink>
+              <NavLink to="dashboard">
+                <li className="hover:scale-105 hover:bg-[#F26B4E] transition duration-700 ease-in  ">
+                  DASHBOARD
+                </li>
+              </NavLink>
               <NavLink to="/products">
                 <li className="hover:scale-105 transition duration-700 ease-in  ">
                   PRODUCTS
@@ -56,6 +61,9 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 gap-4  text-[20px] text-[#000000]">
             <NavLink to="/">
               <li className="font-montserrat text-[16px] ">HOME</li>
+            </NavLink>
+            <NavLink to="dashboard">
+              <li className="font-montserrat text-[16px] ">DASHBOARD</li>
             </NavLink>
             <NavLink to="/products">
               <li className="font-montserrat text-[16px] ">PRODUCT</li>

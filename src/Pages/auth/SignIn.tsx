@@ -13,7 +13,8 @@ import { userLoggedIn } from "@/redux/Feature/authSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -31,6 +32,7 @@ const formSchema = z.object({
 export function Signin() {
   const [signIn, { isLoading, isError, error }] = useSignInMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -56,15 +58,16 @@ export function Signin() {
           user: result?.data?.data?.user,
         };
         dispatch(userLoggedIn(userInfo));
-        alert(result?.data?.message);
+        toast(result?.data?.message);
+        navigate("/dashboard/profile");
       }
       if (result.error) {
         if (result.error.data) {
-          alert(result.error.data.message);
+          toast(result.error.data.message);
         }
       }
     } catch (error) {
-      console.log(error);
+      toast(error.data);
     }
     form.reset();
   }

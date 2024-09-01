@@ -1,6 +1,7 @@
 import App from "@/App";
 import AddProducts from "@/components/AddProduct";
 import UpdateProduct from "@/components/UpdateProduct";
+import Dashboard from "@/Layout/Dashboard";
 import About from "@/Pages/about/About";
 import { Register } from "@/Pages/auth/Register";
 import { Signin } from "@/Pages/auth/SignIn";
@@ -12,17 +13,19 @@ import Error from "@/Pages/error/Error";
 import Home from "@/Pages/Home/Home";
 import ProductMgt from "@/Pages/ProductMgt";
 import Products from "@/Pages/products/Products";
+import { MyBooking } from "@/Pages/user/MyBooking";
+import { Profile } from "@/Pages/user/Profile";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App></App>,
-    errorElement: <Error></Error>,
+    element: <App />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
-        element: <Home></Home>,
+        element: <Home />,
       },
       {
         path: "/products",
@@ -63,6 +66,20 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "profile",
+        element: <Profile></Profile>,
+      },
+      {
+        path: "myBookings",
+        element: <MyBooking></MyBooking>,
       },
     ],
   },

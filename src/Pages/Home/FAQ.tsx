@@ -1,6 +1,6 @@
 const FAQ = () => {
   return (
-    <section className="bg-white py-12">
+    <section className="bg-white py-12 max-e-[1280px] px-10">
       <div className="container mx-auto">
         <h2 className="text-2xl font-bold text-center mb-6">
           Frequently Asked Questions
