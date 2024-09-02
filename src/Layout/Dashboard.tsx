@@ -23,6 +23,11 @@ const Dashboard = () => {
             My Bookings
           </NavLink>
         </li>
+        <li>
+          <NavLink to={"/products"} className="mt-2 font-lato">
+            Bookings
+          </NavLink>
+        </li>
       </>
     );
   }

@@ -34,7 +34,10 @@ const DetailsPage = () => {
             </p>
             <div className="flex items-center mb-4 gap-2 flex-wrap">
               {data?.data?.features?.map((item, index) => (
-                <Button key={index} className="font-lato text-white">
+                <Button
+                  key={index}
+                  className="font-lato text-[#333333] bg-[#F0F8FF]"
+                >
                   {" "}
                   {item}
                 </Button>

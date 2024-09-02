@@ -10,7 +10,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUpdateUserMutation } from "@/redux/Feature/Api/authApi";
-import { useGetAllBookingsQuery } from "@/redux/Feature/Api/carApi";
+import {
+  useGetAllBookingsQuery,
+  useGetAllCarBookingQuery,
+  useGetAllCarsQuery,
+} from "@/redux/Feature/Api/carApi";
 import { RootState } from "@/redux/Feature/store";
 import { useAppSelector } from "@/redux/hook";
 import { useEffect, useState } from "react";
@@ -19,7 +23,12 @@ export function Profile() {
   const { user, accessToken } = useAppSelector(
     (state: RootState) => state.auth
   );
+
   const { data: bookingsCar, isLoading } = useGetAllBookingsQuery(undefined);
+  const { data: allBookings, isLoading: isFetching } =
+    useGetAllCarBookingQuery(undefined);
+  const { data: allCar, isLoading: isLoadingAllCar } =
+    useGetAllCarsQuery(undefined);
   const [newUser, setNewUser] = useState(user);
   const [updateUser, { isLoading: isUpdating, isError: isUpdateError }] =
     useUpdateUserMutation();
@@ -51,8 +60,9 @@ export function Profile() {
   useEffect(() => {
     console.log(bookingsCar);
   }, [bookingsCar]);
-  if (isUpdating) return <p>Saving changes...</p>;
-  if (isLoading) return <p>Loading ...</p>;
+
+  if (isLoading || isUpdating || isLoadingAllCar || isFetching)
+    return <p>Loading ...</p>;
   if (isUpdateError) return <p>Failed to save changes...</p>;
 
   return (
@@ -145,12 +155,49 @@ export function Profile() {
         </DialogContent>
       </Dialog>
 
-      <div className="w-[200px] h-[200px] mt-6 bg-[#F0F8FF] flex flex-col justify-center items-center">
-        <p className="font-lato text-xl mb-3 ">My Bookings</p>
-        <h3 className="font-lato font-bold text-xl text-black">
-          {bookingsCar ? bookingsCar?.data?.length : "No bookings"}
-        </h3>
-      </div>
+      {user.role == "user" && (
+        <div className="w-[200px] h-[200px] mt-6 bg-[#F0F8FF] flex flex-col justify-center items-center">
+          <p className="font-lato text-xl mb-3 ">My Bookings</p>
+          <h3 className="font-lato font-bold text-xl text-black">
+            {bookingsCar ? bookingsCar?.data?.length : "No bookings"}
+          </h3>
+        </div>
+      )}
+      {user.role == "admin" && (
+        <div className="flex   items-center gap-6">
+          <div className="w-[200px] h-[200px] mt-6 flex flex-col justify-center items-center bg-[#F0F8FF] ">
+            <p className="font-lato text-xl mb-3 ">Total Bookings</p>
+            <h3 className="font-lato font-bold text-xl text-black">
+              {allBookings ? allBookings?.data?.length : "No bookings"}
+            </h3>
+          </div>
+          <div className="w-[200px] h-[200px] mt-6 flex flex-col justify-center items-center bg-customBlue ">
+            <p className="font-lato text-xl mb-3 ">Total Revenue</p>
+            <h3 className="font-lato font-bold text-xl text-black">
+              ${" "}
+              {allBookings &&
+              allBookings.data &&
+              Array.isArray(allBookings.data)
+                ? Math.round(
+                    allBookings.data.reduce(
+                      (acc, item) => acc + item.totalCost,
+                      0
+                    )
+                  )
+                : "No Revenue"}
+            </h3>
+          </div>
+          <div className="w-[200px] h-[200px] mt-6 flex flex-col justify-center items-center bg-[#F0F8FF] ">
+            <p className="font-lato text-xl mb-3 ">Available Car</p>
+            <h3 className="font-lato font-bold text-xl text-black">
+              {" "}
+              {allCar && allCar?.data && Array.isArray(allCar.data)
+                ? allCar.data.reduce((acc, _item) => acc + 1, 0)
+                : "No Available Car"}
+            </h3>
+          </div>
+        </div>
+      )}
     </>
   );
 }

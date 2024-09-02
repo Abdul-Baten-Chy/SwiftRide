@@ -16,13 +16,10 @@ export interface Booking {
   updatedAt: string;
 }
 
-interface TableGridProps {
-  myBookings: Booking[];
-}
-export function TableGrid({ myBookings }: TableGridProps) {
+export function TableGrid({ myBookings }) {
   const currentDate = new Date();
   const pastBookings = myBookings?.filter((item) => {
-    const endTime = new Date(item.endTime); // Convert endTime to Date object
+    const endTime = new Date(item.endTime);
     return endTime < currentDate;
   });
   console.log(currentDate);

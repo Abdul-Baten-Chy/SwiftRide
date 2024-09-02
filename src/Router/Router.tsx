@@ -3,6 +3,7 @@ import AddProducts from "@/components/AddProduct";
 import UpdateProduct from "@/components/UpdateProduct";
 import Dashboard from "@/Layout/Dashboard";
 import About from "@/Pages/about/About";
+import { States } from "@/Pages/admin/States";
 import { Register } from "@/Pages/auth/Register";
 import { Signin } from "@/Pages/auth/SignIn";
 
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "myBookings",
         element: <MyBooking></MyBooking>,
+      },
+      {
+        path: "admin",
+        element: <States></States>,
       },
     ],
   },

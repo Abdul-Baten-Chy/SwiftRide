@@ -46,6 +46,16 @@ const authApi = Api.injectEndpoints({
 
       providesTags: ["my-bookins"],
     }),
+    getAllCarBooking: builder.query<ResponseGetAllCar, undefined>({
+      query: () => {
+        return {
+          url: "/bookings/all-bookings",
+          method: "GET",
+        };
+      },
+
+      providesTags: ["all-bookins"],
+    }),
     getSingleCar: builder.query<TCar, string>({
       query: (id) => ({
         url: `/cars/${id}`,
@@ -61,4 +71,5 @@ export const {
   useGetAllCarsQuery,
   useGetSingleCarQuery,
   useGetAllBookingsQuery,
+  useGetAllCarBookingQuery,
 } = authApi;
