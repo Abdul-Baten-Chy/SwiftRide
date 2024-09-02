@@ -1,7 +1,17 @@
+import { userLoggedOut } from "@/redux/Feature/authSlice";
+import { useAppSelector } from "@/redux/hook";
+import { RootState } from "@reduxjs/toolkit/query";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../src/assets/logo.png";
 
 const Navbar = () => {
+  const { user } = useAppSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    localStorage.removeItem("auth");
+    dispatch(userLoggedOut());
+  };
   return (
     <nav className="w-full h-[100px] font-montserrat flex flex-col  justify-center">
       <div className="navbar  max-w-[1280px]  mx-auto px-8">
@@ -42,11 +52,7 @@ const Navbar = () => {
                   PRODUCTS
                 </li>
               </NavLink>
-              <NavLink to="/addFoods">
-                <li className="hover:scale-105 transition duration-700 ease-in  ">
-                  PRODUCT MGT
-                </li>
-              </NavLink>
+
               <NavLink to="/myFoods">
                 <li className="hover:scale-105 transition duration-700 ease-in  ">
                   ABOUT
@@ -68,20 +74,27 @@ const Navbar = () => {
             <NavLink to="/products">
               <li className="font-montserrat text-[16px] ">PRODUCT</li>
             </NavLink>
-            <NavLink to="/productMgt">
-              <li className="font-montserrat text-[16px] ">PRODUCT MGT</li>
-            </NavLink>
+
             <NavLink to="/about">
               <li className=" font-montserrat text-[16px]">ABOUT</li>
             </NavLink>
           </ul>
         </div>
         <div className="navbar-end hidden lg:flex">
-          <Link to="/signIn">
-            <button className="bg-customBlue font-montserrat font-bold text-white px-8 py-2 rounded-full">
-              Sign In
+          {user ? (
+            <button
+              className="bg-customBlue font-montserrat font-bold text-white px-8 py-2 rounded-full"
+              onClick={handleLogout}
+            >
+              Sign out
             </button>
-          </Link>
+          ) : (
+            <Link to="/signIn">
+              <button className="bg-customBlue font-montserrat font-bold text-white px-8 py-2 rounded-full">
+                Sign In
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </nav>

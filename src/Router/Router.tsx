@@ -4,6 +4,7 @@ import About from "@/Pages/about/About";
 import { Register } from "@/Pages/auth/Register";
 import { Signin } from "@/Pages/auth/SignIn";
 
+import { PrivateRoute } from "@/hook/PrivateRoute";
 import AddCar from "@/Pages/admin/AddCar";
 import { AllCars } from "@/Pages/admin/AllCars";
 import UpdateCar from "@/Pages/admin/UpdateCar";
@@ -66,7 +67,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "profile",
