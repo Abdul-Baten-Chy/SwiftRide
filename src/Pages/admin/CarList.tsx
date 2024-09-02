@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -7,6 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useDeleteCarMutation } from "@/redux/Feature/Api/carApi";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 export interface Booking {
   _id: string;
@@ -18,6 +21,14 @@ export interface Booking {
 }
 
 export function CarList({ cars }) {
+  const filterCar = cars.filter((item) => item.isDeleted == false);
+  const [deleteCar, { data, isLoading }] = useDeleteCarMutation();
+
+  useEffect(() => {
+    console.log(data);
+  }, []);
+
+  if (isLoading) <p>Loading ...</p>;
   return (
     <>
       <Table>
@@ -32,8 +43,8 @@ export function CarList({ cars }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {cars &&
-            cars?.map((item) => (
+          {filterCar &&
+            filterCar?.map((item) => (
               <TableRow key={item._id}>
                 <TableCell className="font-medium">{item.name}</TableCell>
                 <TableCell>{item.pricePerHour}</TableCell>
@@ -41,7 +52,9 @@ export function CarList({ cars }) {
                 <Link to={`/dashboard/edit/${item._id}`}>
                   <TableCell className="text-right">Upadate</TableCell>
                 </Link>
-                <TableCell className="text-right">Delete</TableCell>
+                <TableCell className="text-right">
+                  <Button onClick={() => deleteCar(item._id)}>Delete</Button>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>

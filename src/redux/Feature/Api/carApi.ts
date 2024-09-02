@@ -6,7 +6,7 @@ import {
   TCar,
   TcarQuery,
   TqueryParam,
-  TresultSingle,
+  TupdateCar,
 } from "@/Utills/type";
 import { Api } from "./api";
 
@@ -74,13 +74,20 @@ const authApi = Api.injectEndpoints({
       }),
       invalidatesTags: ["cars"],
     }),
-    editCar: builder.mutation<ResponseCreateCar, Partial<TresultSingle>>({
+    editCar: builder.mutation<ResponseCreateCar, Partial<TupdateCar>>({
       query: ({ id, data }) => ({
         url: `/cars/${id}`,
         method: "PUT",
         body: data,
       }),
       invalidatesTags: ["cars", "car"],
+    }),
+    deleteCar: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/cars/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["cars"],
     }),
   }),
 });
@@ -93,4 +100,5 @@ export const {
   useGetAllCarBookingQuery,
   useCreateCarMutation,
   useEditCarMutation,
+  useDeleteCarMutation,
 } = authApi;

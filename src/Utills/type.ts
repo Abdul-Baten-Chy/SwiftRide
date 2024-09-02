@@ -173,5 +173,10 @@ export interface TableGridProps {
   myBookings: Booking[];
 }
 
+export type TupdateCar = {
+  id: string;
+  data: TcarQuery;
+};
+
 // Union type to represent either a success or error response
 export type signResponse = SuccessResponse | ErrorResponse;
