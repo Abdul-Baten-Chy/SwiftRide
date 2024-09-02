@@ -1,29 +1,25 @@
-import { useCreateCartMutation } from "@/redux/Feature/Api/productApi";
+import {
+  useCreateBookingMutation,
+  useGetSingleCarQuery,
+} from "@/redux/Feature/Api/carApi";
 import { useAppSelector } from "@/redux/hook";
-import { newObj, Tproduct, TuserDetails } from "@/Utills/type";
+import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function CheckOut() {
-  const cartData = useAppSelector((state) => state?.cart?.cart);
-  const [createCart, { isLoading, isError }] = useCreateCartMutation();
-  console.log(cartData);
+  const { user } = useAppSelector((state) => state?.auth);
+  const { id } = useParams();
+  const { data, isLoading: isFetching } = useGetSingleCarQuery(id);
+  const [createBooking, { isLoading, isError }] = useCreateBookingMutation();
 
   if (isLoading) return <h2>Loading</h2>;
   if (isError) return <h2>somthing went wrong</h2>;
-  const soldProduct = cartData.map((item: Tproduct) => {
-    const newObj: newObj = {};
-    newObj.id = item._id;
-    newObj.productName = item.name;
-    newObj.quantity = item.userQuantity;
-    newObj.price = item.price;
-    newObj.subTotal = item.price * item.userQuantity;
-    return newObj;
-  });
-  const totalPrice = soldProduct.reduce(
-    (acc, current) => acc + current.subTotal,
-    0
-  );
-  let userDetails: TuserDetails = {};
+
+  const date = new date();
+  const bookedcar = {
+    date,
+    car: id,
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,19 +57,12 @@ function CheckOut() {
             </tr>
           </thead>
           <tbody>
-            {soldProduct &&
-              soldProduct.map((item) => (
-                <tr key={item?.id}>
-                  <td>{item?.productName}</td>
-                  <td>{item?.quantity}</td>
-                  <td>
-                    <span>{item?.price}</span>
-                  </td>
-                  <td>
-                    <span>{item?.subTotal}</span>
-                  </td>
-                </tr>
-              ))}
+            {data && (
+              <tr>
+                <td>{data?.name}</td>
+                <td>{data?.pricePerHour}</td>
+              </tr>
+            )}
           </tbody>
         </table>
         <form onSubmit={handleSubmit}>
@@ -109,6 +98,18 @@ function CheckOut() {
               type="text"
               name="address"
               placeholder="adress"
+              className="input input-bordered"
+              required
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">start Time</span>
+            </label>
+            <input
+              type="text"
+              name="startTime"
+              placeholder="2024-09-25"
               className="input input-bordered"
               required
             />

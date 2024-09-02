@@ -1,14 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useGetSingleCarQuery } from "@/redux/Feature/Api/carApi";
-import { useAppDispatch } from "@/redux/hook";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const DetailsPage = () => {
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedImage, setSelectedImage] = useState("");
-  const dispatch = useAppDispatch();
-
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, isError } = useGetSingleCarQuery(id as string);
   if (isLoading) return <h2> Loading...</h2>;
@@ -20,7 +14,7 @@ const DetailsPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             <img
-              src={selectedImage || data?.data?.image}
+              src={data?.data?.image}
               alt="Reebok Zig Kinetica 3"
               className="w-full rounded-lg"
             />
@@ -58,28 +52,13 @@ const DetailsPage = () => {
                 <div className="w-8 h-8 bg-black border border-gray-300 rounded-full cursor-pointer"></div>
               </div>
             </div>
-            {/* <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2">Size</h3>
-              <div className="grid grid-cols-4 gap-2">
-                {data?.data?.sizes?.map((size) => (
-                  <button
-                    key={size}
-                    className={`border border-gray-300 rounded-lg p-2 ${
-                      selectedSize === size ? "bg-black text-white" : "bg-white"
-                    }`}
-                    onClick={() => setSelectedSize(size)}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div> */}
-            <button
-              className="w-full bg-black text-white py-3 rounded-lg font-lato hover:bg-customBlue hover:text-black transform ease-linear duration-500"
-              // onClick={() => dispatch(addtoCart(data!.data))}
-            >
-              Add to cart
-            </button>
+
+            <Link to={`/checkout/${data?.data?._id}`}>
+              {" "}
+              <button className="w-full bg-black text-white py-3 rounded-lg font-lato hover:bg-customBlue hover:text-black transform ease-linear duration-500">
+                Book Car
+              </button>
+            </Link>
             <p className="text-gray-500 mt-4">
               Free delivery on orders over $30.00
             </p>

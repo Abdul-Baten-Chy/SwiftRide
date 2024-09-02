@@ -8,12 +8,10 @@ import { PrivateRoute } from "@/hook/PrivateRoute";
 import AddCar from "@/Pages/admin/AddCar";
 import { AllCars } from "@/Pages/admin/AllCars";
 import UpdateCar from "@/Pages/admin/UpdateCar";
-import Cart from "@/Pages/Cart";
 import CheckOut from "@/Pages/CheckOut";
 import DetailsPage from "@/Pages/DetailsPage";
 import Error from "@/Pages/error/Error";
 import Home from "@/Pages/Home/Home";
-import ProductMgt from "@/Pages/ProductMgt";
 import Products from "@/Pages/products/Products";
 import { MyBooking } from "@/Pages/user/MyBooking";
 import { Profile } from "@/Pages/user/Profile";
@@ -31,28 +29,28 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products></Products>,
+        element: (
+          <PrivateRoute>
+            <Products></Products>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/details/:id",
-        element: <DetailsPage></DetailsPage>,
+        element: (
+          <PrivateRoute>
+            <DetailsPage></DetailsPage>
+          </PrivateRoute>
+        ),
       },
 
-      {
-        path: "/productMgt",
-        element: <ProductMgt></ProductMgt>,
-      },
-      {
-        path: "/cart",
-        element: <Cart></Cart>,
-      },
       {
         path: "/about",
         element: <About></About>,
       },
 
       {
-        path: "/checkout",
+        path: "/checkout/:id",
         element: <CheckOut></CheckOut>,
       },
       {
