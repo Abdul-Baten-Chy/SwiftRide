@@ -1,39 +1,29 @@
-import {
-  useEditProductMutation,
-  useGetSingleProductQuery,
-} from "@/redux/Feature/Api/productApi";
+import { useCreateCarMutation } from "@/redux/Feature/Api/carApi";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 const image_hosting_key = import.meta.env.VITE_API_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
-const UpdateProduct = () => {
-  const { id } = useParams<{ id: string }>();
-  const [editProduct] = useEditProductMutation();
-  const { data, isLoading, isError } = useGetSingleProductQuery(id);
+const AddCar = () => {
+  const [createCar, { isLoading }] = useCreateCarMutation();
 
-  if (isLoading) return <h2> Loading...</h2>;
-  if (isError) return <h2> Something went wrong...</h2>;
-  const product = data?.data;
-  console.log(data);
-
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: {
+    preventDefault: () => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    target: any;
+  }) => {
     e.preventDefault();
 
     const form = e.target;
     const name = form.name.value;
     const images = Array.from(form.image.files);
 
-    const quantity = form.quantity.value;
-    const sizeInput = form.size.value;
-    const sizes = sizeInput ? sizeInput.split(",") : [];
-    const category = form.category.value;
-    const price = form.price.value;
+    const color = form.color.value;
     const description = form.description.value;
-    const rating = form.rating.value;
-    const brand = form.brand.value;
-    const isFeatured = form.featured.value === "true";
+    const pricePerHour = form.pricePerHour.value;
+    const features = form.features.value ? form.features.value.split(",") : [];
+    const status = form.status.value;
+    const isElectric = form.isElectric.value === "true";
     const imageUrls = await Promise.all(
       images.map(async (image: File) => {
         const formData = new FormData();
@@ -53,19 +43,18 @@ const UpdateProduct = () => {
       })
     );
 
-    const data = {
+    const car = {
       name,
       images: imageUrls,
-      quantity: Number(quantity),
-      sizes,
-      category,
-      price: Number(price),
+      color,
+      status,
+      pricePerHour: Number(pricePerHour),
       description,
-      rating: Number(rating),
-      brand,
-      isFeatured,
+      isElectric,
+      features,
+      isDeleted: false,
     };
-    const res = await editProduct({ id, data });
+    const res = await createCar(car);
     console.log(res?.data);
 
     if (res?.data?.success) {
@@ -80,10 +69,11 @@ const UpdateProduct = () => {
       });
     }
   };
+  if (isLoading) <h2>Loading...</h2>;
   return (
-    <div className="pt-16 min-h-[100vh-64px]">
-      <div className="hero min-h-[100vh-64px] pt-14   bg-base-200">
-        <div className="card flex-shrink-0 mt-10 mb-10 w-full max-w-3xl shadow-2xl bg-base-100">
+    <div className="mt-6 min-h-[100vh-64px]">
+      <div className="hero min-h-[100vh] ">
+        <div className="card flex-shrink-0  mb-10 w-full max-w-3xl shadow-2xl bg-base-100">
           <form
             className="card-body grid grid-cols-1 lg:grid-cols-2 gap-6 "
             onSubmit={handleFormSubmit}
@@ -96,71 +86,29 @@ const UpdateProduct = () => {
                 type="text"
                 name="name"
                 placeholder="name"
-                defaultValue={product?.name}
                 className="input input-bordered"
                 required
               />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Brand Name</span>
+                <span className="label-text">Color</span>
               </label>
               <input
                 type="text"
-                name="brand"
-                placeholder="brand name"
-                defaultValue={product?.brand}
+                name="color"
+                placeholder="color name"
                 className="input input-bordered"
                 required
               />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Quantity</span>
-              </label>
-              <input
-                type="number"
-                name="quantity"
-                defaultValue={product?.quantity}
-                placeholder="quantity"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Price</span>
-              </label>
-              <input
-                type="number"
-                name="price"
-                defaultValue={product?.price}
-                placeholder="Price"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Category</span>
-              </label>
-              <input
-                type="text"
-                name="category"
-                defaultValue={product?.category}
-                placeholder="Category"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Description</span>
+                <span className="label-text">description</span>
               </label>
               <input
                 type="text"
                 name="description"
-                defaultValue={product?.description}
                 placeholder="Description"
                 className="input input-bordered"
                 required
@@ -168,37 +116,54 @@ const UpdateProduct = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Size</span>
-              </label>
-              <input
-                type="text"
-                name="size"
-                defaultValue={product?.sizes}
-                placeholder="Size separete with comma"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Rating</span>
+                <span className="label-text">price Per Hour</span>
               </label>
               <input
                 type="number"
-                name="rating"
-                defaultValue={product?.rating}
-                placeholder="Rating"
+                name="pricePerHour"
+                placeholder="Price Per Hour"
                 className="input input-bordered"
                 required
               />
             </div>
+
             <div className="form-control">
-              <label className="label" htmlFor="isFeatured">
-                <span className="label-text">Featured</span>
+              <label className="label">
+                <span className="label-text">Feature</span>
               </label>
-              <select name="featured" id="isFeatured">
+              <input
+                type="text"
+                name="features"
+                placeholder="features separete with comma"
+                className="input input-bordered"
+                required
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="isElectric">
+                <span className="label-text">isElectric</span>
+              </label>
+              <select
+                name="isElectric"
+                id="isElectric"
+                className="h-12 border rounded-lg"
+              >
                 <option value="true">True</option>
                 <option value="false">False</option>
+              </select>
+            </div>
+            <div className="form-control">
+              <label className="label" htmlFor="status">
+                <span className="label-text">Is Available</span>
+              </label>
+              <select
+                name="status"
+                id="status"
+                className="h-12 border rounded-lg"
+              >
+                <option value="available">Available</option>
+                <option value="unavailabel">Unavailable</option>
               </select>
             </div>
             <div className="form-control">
@@ -215,8 +180,8 @@ const UpdateProduct = () => {
               />
             </div>
             <div className="form-control mt-6 col-span-2">
-              <button type="submit" className="btn btn-primary">
-                Edit Product
+              <button type="submit" className="btn bg-[#4a869e] text-white">
+                Add Car
               </button>
             </div>
           </form>
@@ -227,4 +192,4 @@ const UpdateProduct = () => {
   );
 };
 
-export default UpdateProduct;
+export default AddCar;

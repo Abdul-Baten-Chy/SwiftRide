@@ -11,12 +11,29 @@ export interface TCar {
   createdAt: string;
   updatedAt: string;
 }
+export interface TcarQuery {
+  name: string;
+  images: string[];
+  color: string;
+  status: "available" | "unavailable";
+  pricePerHour: number;
+  description: string;
+  isElectric: boolean;
+  features: string[];
+  isDeleted: boolean;
+}
 
 export interface ResponseGetAllCar {
   success: boolean;
   statusCode: number;
   message: string;
   data: TCar[];
+}
+export interface ResponseCreateCar {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: TCar;
 }
 
 export type Tresult = {
@@ -155,5 +172,6 @@ export interface Booking {
 export interface TableGridProps {
   myBookings: Booking[];
 }
+
 // Union type to represent either a success or error response
 export type signResponse = SuccessResponse | ErrorResponse;

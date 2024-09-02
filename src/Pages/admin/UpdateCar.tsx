@@ -1,17 +1,24 @@
-import { useCreateProductMutation } from "@/redux/Feature/Api/productApi";
+import {
+  useEditProductMutation,
+  useGetSingleProductQuery,
+} from "@/redux/Feature/Api/productApi";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 const image_hosting_key = import.meta.env.VITE_API_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
-const AddProducts = () => {
-  const [createProduct, { isLoading }] = useCreateProductMutation();
+const UpdateCar = () => {
+  const { id } = useParams<{ id: string }>();
+  const [editProduct] = useEditProductMutation();
+  const { data, isLoading, isError } = useGetSingleProductQuery(id);
 
-  const handleFormSubmit = async (e: {
-    preventDefault: () => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    target: any;
-  }) => {
+  if (isLoading) return <h2> Loading...</h2>;
+  if (isError) return <h2> Something went wrong...</h2>;
+  const product = data?.data;
+  console.log(data);
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -46,7 +53,7 @@ const AddProducts = () => {
       })
     );
 
-    const product = {
+    const data = {
       name,
       images: imageUrls,
       quantity: Number(quantity),
@@ -58,7 +65,7 @@ const AddProducts = () => {
       brand,
       isFeatured,
     };
-    const res = await createProduct(product);
+    const res = await editProduct({ id, data });
     console.log(res?.data);
 
     if (res?.data?.success) {
@@ -73,7 +80,6 @@ const AddProducts = () => {
       });
     }
   };
-  if (isLoading) <h2>Loading...</h2>;
   return (
     <div className="pt-16 min-h-[100vh-64px]">
       <div className="hero min-h-[100vh-64px] pt-14   bg-base-200">
@@ -90,6 +96,7 @@ const AddProducts = () => {
                 type="text"
                 name="name"
                 placeholder="name"
+                defaultValue={product?.name}
                 className="input input-bordered"
                 required
               />
@@ -102,6 +109,7 @@ const AddProducts = () => {
                 type="text"
                 name="brand"
                 placeholder="brand name"
+                defaultValue={product?.brand}
                 className="input input-bordered"
                 required
               />
@@ -113,6 +121,7 @@ const AddProducts = () => {
               <input
                 type="number"
                 name="quantity"
+                defaultValue={product?.quantity}
                 placeholder="quantity"
                 className="input input-bordered"
                 required
@@ -125,6 +134,7 @@ const AddProducts = () => {
               <input
                 type="number"
                 name="price"
+                defaultValue={product?.price}
                 placeholder="Price"
                 className="input input-bordered"
                 required
@@ -137,6 +147,7 @@ const AddProducts = () => {
               <input
                 type="text"
                 name="category"
+                defaultValue={product?.category}
                 placeholder="Category"
                 className="input input-bordered"
                 required
@@ -149,6 +160,7 @@ const AddProducts = () => {
               <input
                 type="text"
                 name="description"
+                defaultValue={product?.description}
                 placeholder="Description"
                 className="input input-bordered"
                 required
@@ -161,6 +173,7 @@ const AddProducts = () => {
               <input
                 type="text"
                 name="size"
+                defaultValue={product?.sizes}
                 placeholder="Size separete with comma"
                 className="input input-bordered"
                 required
@@ -173,6 +186,7 @@ const AddProducts = () => {
               <input
                 type="number"
                 name="rating"
+                defaultValue={product?.rating}
                 placeholder="Rating"
                 className="input input-bordered"
                 required
@@ -201,8 +215,8 @@ const AddProducts = () => {
               />
             </div>
             <div className="form-control mt-6 col-span-2">
-              <button type="submit" className="btn bg-[#4a869e] text-white">
-                Add Product
+              <button type="submit" className="btn btn-primary">
+                Edit Product
               </button>
             </div>
           </form>
@@ -213,4 +227,4 @@ const AddProducts = () => {
   );
 };
 
-export default AddProducts;
+export default UpdateCar;

@@ -1,8 +1,10 @@
 import {
   ApiResponse,
   RegisterFormData,
+  ResponseCreateCar,
   ResponseGetAllCar,
   TCar,
+  TcarQuery,
   TqueryParam,
 } from "@/Utills/type";
 import { Api } from "./api";
@@ -63,6 +65,14 @@ const authApi = Api.injectEndpoints({
       }),
       providesTags: ["car"],
     }),
+    createCar: builder.mutation<ResponseCreateCar, TcarQuery>({
+      query: (data) => ({
+        url: "/cars",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["cars"],
+    }),
   }),
 });
 
@@ -72,4 +82,5 @@ export const {
   useGetSingleCarQuery,
   useGetAllBookingsQuery,
   useGetAllCarBookingQuery,
+  useCreateCarMutation,
 } = authApi;

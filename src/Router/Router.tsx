@@ -1,12 +1,12 @@
 import App from "@/App";
-import AddProducts from "@/components/AddProduct";
-import UpdateProduct from "@/components/UpdateProduct";
 import Dashboard from "@/Layout/Dashboard";
 import About from "@/Pages/about/About";
-import { States } from "@/Pages/admin/States";
 import { Register } from "@/Pages/auth/Register";
 import { Signin } from "@/Pages/auth/SignIn";
 
+import AddCar from "@/Pages/admin/AddCar";
+import { AllCars } from "@/Pages/admin/AllCars";
+import UpdateCar from "@/Pages/admin/UpdateCar";
 import Cart from "@/Pages/Cart";
 import CheckOut from "@/Pages/CheckOut";
 import DetailsPage from "@/Pages/DetailsPage";
@@ -36,10 +36,7 @@ const router = createBrowserRouter([
         path: "/details/:id",
         element: <DetailsPage></DetailsPage>,
       },
-      {
-        path: "/edit/:id",
-        element: <UpdateProduct></UpdateProduct>,
-      },
+
       {
         path: "/productMgt",
         element: <ProductMgt></ProductMgt>,
@@ -52,10 +49,7 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About></About>,
       },
-      {
-        path: "/addProduct",
-        element: <AddProducts></AddProducts>,
-      },
+
       {
         path: "/checkout",
         element: <CheckOut></CheckOut>,
@@ -83,8 +77,16 @@ const router = createBrowserRouter([
         element: <MyBooking></MyBooking>,
       },
       {
-        path: "admin",
-        element: <States></States>,
+        path: "addCar",
+        element: <AddCar></AddCar>,
+      },
+      {
+        path: "edit/:id",
+        element: <UpdateCar></UpdateCar>,
+      },
+      {
+        path: "allcars",
+        element: <AllCars></AllCars>,
       },
     ],
   },

@@ -34,9 +34,15 @@ const Dashboard = () => {
   if (user?.role == "admin") {
     content = (
       <>
-        <li className="text-3xl my-5">All Employee List </li>
+        <li className="text-3xl my-5 font-lato">Admin Panel </li>
         <li>
-          <NavLink to={"allemployee"}>All Employee List</NavLink>{" "}
+          <NavLink to={"profile"}>Profile</NavLink>{" "}
+        </li>
+        <li>
+          <NavLink to={"addCar"}>Add Car</NavLink>{" "}
+        </li>
+        <li>
+          <NavLink to={"allcars"}>All Cars</NavLink>{" "}
         </li>
       </>
     );
